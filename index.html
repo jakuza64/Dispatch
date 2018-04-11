@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dispatch Demo</title>
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+</head>
+  <script src="pixi/pixi.min.js"></script>
+<body>
+  <style>* {padding: 0; margin: 0}</style>
+  <script type="text/javascript">
+    //Create a Pixi Application
+    let app = new PIXI.Application({ 
+        antialias: true   // default: false
+      }
+    );
+
+    //Add the canvas that Pixi automatically created for you to the HTML document
+    document.body.appendChild(app.view);
+
+    //setting bg color
+    app.renderer.backgroundColor = 0x161B1C;
+
+    //setting to fullscreen
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+    app.renderer.autoResize = true;
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    //font style
+    var style = new PIXI.TextStyle({
+    fontFamily: 'VT323',
+    fontStyle: 'normal',
+    fontSize: 38,
+    fill: '#F0F3F3',
+    dropShadow: true,
+    dropShadowColor: '#FFFFFF',
+    dropShadowBlur: 7,
+    dropShadowAngle: 0,
+    dropShadowDistance: 1,
+    wordWrap: true,
+    wordWrapWidth: 1000
+
+    });
+
+    //initialize text
+    var richText = new PIXI.Text('D I S P A T C H \n _____________', style);
+    richText.x = 30;
+    richText.y = 60;
+
+    //add text
+    app.stage.addChild(richText);
+
+  </script>
+</body>
+</html>
