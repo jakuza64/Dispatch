@@ -6,6 +6,7 @@
   
 </head>
   <script src="pixi/pixi.min.js"></script>
+  <script src="src/text.js"></script>
 <body>
   <style>* {padding: 0; margin: 0}</style>
   <script type="text/javascript">
@@ -69,41 +70,16 @@
             app.renderer.autoResize = true;
             app.renderer.resize(window.innerWidth, window.innerHeight);
 
-            //font style
-            var style = new PIXI.TextStyle({
-            fontFamily: 'VT323',
-            fontStyle: 'normal',
-            fontSize: 38,
-            fill: '#F0F3F3',
-            dropShadow: true,
-            dropShadowColor: '#FFFFFF',
-            dropShadowBlur: 7,
-            dropShadowAngle: 0,
-            dropShadowDistance: 1,
-            wordWrap: true,
-            wordWrapWidth: 1000
-            });
+            
 
             //initialize text
-            let titleText = new PIXI.Text('D I S P A T C H \n _____________', style);
-            titleText.position.set(195,60)
+            let titleText = new Text('D I S P A T C H \n _____________', true, 195, 60);
 
             //Create the seal sprite
             let titleIcon = new Sprite(resources["images/police_seal.png"].texture);
             titleIcon.position.set(100,100);
             titleIcon.anchor.set(0.5,0.5);
-
-            //initialize title container, add children and properties and add to stage
-            title = new PIXI.Container();
-            title.addChild(titleText);
-            title.addChild(titleIcon);
-            title.x = 20;
-            title.y = 20;
-            title.vx = 0;//x velocity
-            title.vy = 0;//y velocity
-            title.vr = .5 * Math.PI;//rotation velocity
-            title.vs = .25 * Math.PI;//scale velocity
-            app.stage.addChild(title);
+            app.stage.addChild(titleIcon);
             
             //set the game state to play
             state = play;
@@ -120,12 +96,7 @@
 
         function play(delta) {
 
-            //Move the image
-            title.rotation = .01 * Math.sin(title.vr);
-            let scale = 1 + (.01 * Math.sin(title.vs));
-            title.scale.set(scale,scale);
-            title.vr += .08;
-            title.vs += .08;
+            //do stuff
         }
     }
 

@@ -1,0 +1,23 @@
+//initialize title container, add children and properties and add to stage
+-        title = new PIXI.Container();
+-        title.addChild(titleText);
+-        title.addChild(titleIcon);
+-        title.x = 20;
+-        title.y = 20;
+-        title.vx = 0;
+-        title.vy = 0;
+-        title.vr = .5 * Math.PI;
+-        title.vs = .25 * Math.PI;
+-        app.stage.addChild(title);
+
+
+
+function play(delta) {
++
++            //Move the image
++            title.rotation = .01 * Math.sin(title.vr);
++            let scale = 1 + (.01 * Math.sin(title.vs));
++            title.scale.set(scale,scale);
++            title.vr += .08;
++            title.vs += .08;
++        }
