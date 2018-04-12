@@ -9,17 +9,21 @@
 <body>
   <style>* {padding: 0; margin: 0}</style>
   <script type="text/javascript">
+    //Aliases
+    let Application = PIXI.Application,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+
     //Create a Pixi Application
     let app = new PIXI.Application({ 
-        antialias: true   // default: false
+        antialias: true,   // default: false
+        backgroundColor : 0x161B1C
       }
     );
 
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.body.appendChild(app.view);
-
-    //setting bg color
-    app.renderer.backgroundColor = 0x161B1C;
 
     //setting to fullscreen
     app.renderer.view.style.position = "absolute";
@@ -45,11 +49,24 @@
 
     //initialize text
     var richText = new PIXI.Text('D I S P A T C H \n _____________', style);
-    richText.x = 30;
+    richText.x = 200;
     richText.y = 60;
 
     //add text
     app.stage.addChild(richText);
+
+    //adding police seal sprite
+    loader
+      .add("images/police_seal.png")
+      .load(setup);
+    //This `setup` function will run when the image has loaded
+    function setup() {
+      //Create the cat sprite
+      let seal = new Sprite(resources["images/police_seal.png"].texture);
+      
+      //Add the cat to the stage
+      app.stage.addChild(seal);
+    }
 
   </script>
 </body>
