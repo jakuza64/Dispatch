@@ -25,47 +25,80 @@
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.body.appendChild(app.view);
 
-    //setting to fullscreen
-    app.renderer.view.style.position = "absolute";
-    app.renderer.view.style.display = "block";
-    app.renderer.autoResize = true;
-    app.renderer.resize(window.innerWidth, window.innerHeight);
-
-    //font style
-    var style = new PIXI.TextStyle({
-    fontFamily: 'VT323',
-    fontStyle: 'normal',
-    fontSize: 38,
-    fill: '#F0F3F3',
-    dropShadow: true,
-    dropShadowColor: '#FFFFFF',
-    dropShadowBlur: 7,
-    dropShadowAngle: 0,
-    dropShadowDistance: 1,
-    wordWrap: true,
-    wordWrapWidth: 1000
-
-    });
-
-    //initialize text
-    var richText = new PIXI.Text('D I S P A T C H \n _____________', style);
-    richText.x = 200;
-    richText.y = 60;
-
-    //add text
-    app.stage.addChild(richText);
-
     //adding police seal sprite
     loader
       .add("images/police_seal.png")
       .load(setup);
+
+    //defining global variables
+    let title, state;
+
     //This `setup` function will run when the image has loaded
     function setup() {
-      //Create the cat sprite
-      let seal = new Sprite(resources["images/police_seal.png"].texture);
-      
-      //Add the cat to the stage
-      app.stage.addChild(seal);
+
+        //setting to fullscreen
+        app.renderer.view.style.position = "absolute";
+        app.renderer.view.style.display = "block";
+        app.renderer.autoResize = true;
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+
+        //font style
+        var style = new PIXI.TextStyle({
+        fontFamily: 'VT323',
+        fontStyle: 'normal',
+        fontSize: 38,
+        fill: '#F0F3F3',
+        dropShadow: true,
+        dropShadowColor: '#FFFFFF',
+        dropShadowBlur: 7,
+        dropShadowAngle: 0,
+        dropShadowDistance: 1,
+        wordWrap: true,
+        wordWrapWidth: 1000
+        });
+
+        //initialize text
+        let titleText = new PIXI.Text('D I S P A T C H \n _____________', style);
+        titleText.position.set(195,60)
+
+        //Create the seal sprite
+        let titleIcon = new Sprite(resources["images/police_seal.png"].texture);
+        titleIcon.position.set(100,100);
+        titleIcon.anchor.set(0.5,0.5);
+
+        //initialize title container, add children and properties and add to stage
+        title = new PIXI.Container();
+        title.addChild(titleText);
+        title.addChild(titleIcon);
+        title.x = 20;
+        title.y = 20;
+        title.vx = 0;
+        title.vy = 0;
+        title.vr = .5 * Math.PI;
+        title.vs = .25 * Math.PI;
+        app.stage.addChild(title);
+        
+        //set the game state to play
+        state = play;
+
+        //start the game loop, finishing setup
+        app.ticker.add(delta =>  gameLoop(delta));
+    }
+
+    function gameLoop(delta) {
+
+         //Update the current game state
+         state(delta);
+    }
+
+    function play(delta) {
+
+        //Move the image
+        title.rotation = .01 * Math.sin(title.vr);
+        let scale = 1 + (.01 * Math.sin(title.vs));
+        title.scale.set(scale,scale);
+        title.vr += .08;
+        title.vs += .08;
     }
 
   </script>
