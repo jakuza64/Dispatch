@@ -5,9 +5,10 @@
   <title>Dispatch Demo</title>
   
 </head>
-  <script src="src/button.js"></script>
   <script src="pixi/pixi.min.js"></script>
   <script src="src/text.js"></script>
+  <script src="src/button.js"></script>
+  <script src="src/clock.js"></script>
 <body>
   <style>* {padding: 0; margin: 0}</style>
   <script type="text/javascript">
@@ -65,7 +66,9 @@
         let titleText,
             titleIcon,
             testButton,
-            state;
+            state,
+            clock,
+            clockText,
             simpleBool = false;
 
         //This `setup` function will run when the image has loaded
@@ -86,12 +89,15 @@
             titleIcon.anchor.set(0.5,0.5);
             app.stage.addChild(titleIcon);
 
-            //Create a button underneath
+            //Create a couple buttons underneath
             testButton = new Button('BUTTON', test, true, 195, 140);
             testButton2 = new Button('AND ANOTHA ONE', test2, true, 195, 180);
             
-            //set the game state to play
-            state = play;
+            //set the game state to play and initialize the game clock (and its text and pause button)
+            state = loopPlay;
+            clock = new Clock(20);
+            clockText = new Text('', true, 1, app.screen.width - 120, app.screen.height - 40);
+            pauseButton = new Button('//', togglePause, true, app.screen.width - 160, app.screen.height - 40);
 
             //start the game loop, finishing setup
             app.ticker.add(delta =>  gameLoop(delta));
@@ -99,23 +105,44 @@
 
         function gameLoop(delta) {
 
-             //Update the current game state
-             state(delta);
+            //Update the current game state
+            state(delta);
         };
 
-        function play(delta) {
+        function loopPlay(delta) {
             
-            //do stuff
+            clock.iterate(delta);
+            clockText.setText(clock.humanizeCurrentTime());
         };
+
+        function loopPaused(delta) {
+
+            //do nothing
+        }
 
         function test() {
+
             simpleBool = !simpleBool;
-            if (simpleBool) titleText.setText('D I T C H S A P \n _____________');
+            if (simpleBool) titleText.setText('S P A G H E T T I \n _____________');
             else titleText.setText('D I S P A T C H \n _____________');
         }
 
         function test2() {
+
             alert('ALERT');
+        }
+
+        function togglePause() {
+
+            if (state = loopPlay) {
+                state = loopPaused;
+                pauseButton.setText('>', true);
+            }
+            else {
+                state = loopPlay;
+                pauseButton.setText('//', true);
+            }
+            
         }
 
         
