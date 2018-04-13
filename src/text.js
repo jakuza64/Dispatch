@@ -37,7 +37,7 @@ function Text(text, isVisible, styleNum, x, y) {
 	this.styleNum = styleNum;
 
 	//add text to the stage
-	app.stage.addChild(this.textObj);
+	//app.stage.addChild(this.textObj);
 
 	this.setText = function(text) {
 		this.textObj.text = text;

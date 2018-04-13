@@ -43,7 +43,7 @@ function Button(text, callBack, isVisible, x, y) {
 	this.button.addChild(this.textObj.textObj);
 
 	//adds the button to the stage
-	app.stage.addChild(this.button);
+	//app.stage.addChild(this.button);
 
 	this.setText = function(text, updateBounds) {
 		this.textObj.setText(text);

@@ -66,6 +66,7 @@
         let titleText,
             titleIcon,
             testButton,
+            testButton2,
             state,
             clock,
             clockText,
@@ -102,8 +103,8 @@
             titleIcon = new Sprite(resources["images/police_seal.png"].texture);
             titleIcon.position.set(100,100);
             titleIcon.anchor.set(0.5,0.5);
-            app.stage.addChild(titleIcon);            
-
+            app.stage.addChild(titleIcon);
+            
             //Create a couple buttons underneath
             testButton = new Button('BUTTON', test, true, 195, 140);
             gameScene.addChild(testButton.button);
@@ -114,11 +115,9 @@
             state = loopPlay;
             clock = new Clock(20);
             clockText = new Text('', true, 1, app.screen.width - 120, app.screen.height - 40);
-
             app.stage.addChild(clockText.textObj);
             pauseButton = new Button('//', togglePause, true, app.screen.width - 160, app.screen.height - 40);
             app.stage.addChild(pauseButton.button);
-
 
 
             //start the game loop, finishing setup
@@ -147,14 +146,20 @@
             simpleBool = !simpleBool;
             if (simpleBool) titleText.setText('S P A G H E T T I \n _______________');
             else titleText.setText('D I S P A T C H \n _____________');
+            testButton.button.visible = false;
+            testButton2.button.visible = true;
         }
 
         function test2() {
 
             alert('ALERT');
+            testButton.button.visible = true;
+            testButton2.button.visible = false;
+
         }
 
         function togglePause() {
+
             if (state == loopPlay) {
                 state = loopPaused;
                 gameScene.visible = false;
