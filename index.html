@@ -5,6 +5,7 @@
   <title>Dispatch Demo</title>
   
 </head>
+  <script src="src/button.js"></script>
   <script src="pixi/pixi.min.js"></script>
   <script src="src/text.js"></script>
 <body>
@@ -51,6 +52,8 @@
     })();
     /* jshint ignore:end */
 
+
+
     function init() {
 
         //adding police seal sprite
@@ -59,7 +62,11 @@
           .load(setup);
 
         //defining global variables
-        let title, state;
+        let titleText,
+            titleIcon,
+            testButton,
+            state;
+            simpleBool = false;
 
         //This `setup` function will run when the image has loaded
         function setup() {
@@ -69,36 +76,51 @@
             app.renderer.view.style.display = "block";
             app.renderer.autoResize = true;
             app.renderer.resize(window.innerWidth, window.innerHeight);
-
-            
-
+  
             //initialize text
-            let titleText = new Text('D I S P A T C H \n _____________', true, 195, 60);
+            titleText = new Text('D I S P A T C H \n _____________', true, 0, 195, 60);
 
             //Create the seal sprite
-            let titleIcon = new Sprite(resources["images/police_seal.png"].texture);
+            titleIcon = new Sprite(resources["images/police_seal.png"].texture);
             titleIcon.position.set(100,100);
             titleIcon.anchor.set(0.5,0.5);
             app.stage.addChild(titleIcon);
+
+            //Create a button underneath
+            testButton = new Button('BUTTON', test, true, 195, 140);
+            testButton2 = new Button('AND ANOTHA ONE', test2, true, 195, 180);
             
             //set the game state to play
             state = play;
 
             //start the game loop, finishing setup
             app.ticker.add(delta =>  gameLoop(delta));
-        }
+        };
 
         function gameLoop(delta) {
 
              //Update the current game state
              state(delta);
-        }
+        };
 
         function play(delta) {
-
+            
             //do stuff
+        };
+
+        function test() {
+            simpleBool = !simpleBool;
+            if (simpleBool) titleText.setText('D I T C H S A P \n _____________');
+            else titleText.setText('D I S P A T C H \n _____________');
         }
-    }
+
+        function test2() {
+            alert('ALERT');
+        }
+
+        
+    };
+    
 
     
 
