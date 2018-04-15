@@ -16,7 +16,8 @@
     let Application = PIXI.Application,
         loader = PIXI.loader,
         resources = PIXI.loader.resources,
-        Sprite = PIXI.Sprite;
+        Sprite = PIXI.Sprite,
+        Graphics = PIXI.Graphics;
 
     //Create a Pixi Application
     let app = new PIXI.Application({ 
@@ -70,6 +71,7 @@
             state,
             clock,
             clockText,
+            gameOn = false,
             simpleBool = false;
 
         //This `setup` function will run when the image has loaded
@@ -82,23 +84,30 @@
             app.renderer.resize(window.innerWidth, window.innerHeight);
             
             //Setup game scenes
-            gameScene = new PIXI.Container();
-            app.stage.addChild(gameScene);
+            startScene = new PIXI.Container();
+            app.stage.addChild(startScene);
           
             pauseScene = new PIXI.Container();
             app.stage.addChild(pauseScene);
+            
+            gameScene = new PIXI.Container();
+            app.stage.addChild(gameScene);
     
-            gameScene.visible = true;
+            startScene.visible = true;
             pauseScene.visible = false;
+            gameScene.visible = false;
 
             //initialize title text
             titleText = new Text('D I S P A T C H \n _____________', true, 0, 195, 60);
-            gameScene.addChild(titleText.textObj);
+            startScene.addChild(titleText.textObj);
 
             //initialize pause text
             pauseText = new Text('P A U S E D \n _________', true, 0, 512, 256);
             pauseScene.addChild(pauseText.textObj);
-
+            
+            dummyText = new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non urna non eros viverra dapibus suscipit convallis velit. Vestibulum luctus accumsan ullamcorper. Aenean molestie condimentum mauris sed ornare. Nullam dignissim.', true, 0, 150, 236);
+            gameScene.addChild(dummyText.textObj);
+            
             //Create the seal sprite
             titleIcon = new Sprite(resources["images/police_seal.png"].texture);
             titleIcon.position.set(100,100);
@@ -107,16 +116,21 @@
             
             //Create a couple buttons underneath
             testButton = new Button('BUTTON', test, true, 195, 140);
-            gameScene.addChild(testButton.button);
+            startScene.addChild(testButton.button);
             testButton2 = new Button('AND ANOTHA ONE', test2, true, 195, 180);
-            gameScene.addChild(testButton2.button);
+            startScene.addChild(testButton2.button);
+            testButton3 = new Button('Start Game', test3, true, 195, 220);
+            startScene.addChild(testButton3.button);
+            
 
             //set the game state to play and initialize the game clock (and its text and pause button)
             state = loopPlay;
             clock = new Clock(20);
             clockText = new Text('', true, 1, app.screen.width - 120, app.screen.height - 40);
+            //Add clock to game
             app.stage.addChild(clockText.textObj);
             pauseButton = new Button('//', togglePause, true, app.screen.width - 160, app.screen.height - 40);
+            //Add pause button to game
             app.stage.addChild(pauseButton.button);
 
 
@@ -142,7 +156,6 @@
         }
 
         function test() {
-
             simpleBool = !simpleBool;
             if (simpleBool) titleText.setText('S P A G H E T T I \n _______________');
             else titleText.setText('D I S P A T C H \n _____________');
@@ -152,36 +165,36 @@
         }
 
         function test2() {
-
-            alert('ALERT');
+            alert('mEATballs');
             testButton.button.visible = true;
             testButton2.button.visible = false;
-
+        }
+        
+         function test3() {
+           startScene.visible = 0;
+           gameScene.visible = 1;
+           gameOn = true;
         }
 
         function togglePause() {
-
+            //Pause
             if (state == loopPlay) {
                 state = loopPaused;
-                gameScene.visible = false;
+                if(gameOn){ gameScene.visible = false; }
+                else{ startScene.visible = false; }
                 pauseScene.visible = true;
                 pauseButton.setText('>', true);
             }
+            //Unpause
             else if (state == loopPaused) {
                 state = loopPlay;
-                gameScene.visible = true;
+                if(gameOn){ gameScene.visible = true; }
+                else{ startScene.visible = true; }                
                 pauseScene.visible = false;
                 pauseButton.setText('//', true);
             }
-            
         }
-
-        
     };
-    
-
-    
-
   </script>
 </body>
 </html>
