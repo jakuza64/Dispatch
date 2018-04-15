@@ -35,6 +35,7 @@ function Text(text, isVisible, styleNum, x, y) {
 	this.textObj.visible = isVisible;
 	this.textObj.position.set(x,y);
 	this.styleNum = styleNum;
+    this.chars = [];
 
 	//add text to the stage
 	//app.stage.addChild(this.textObj);
@@ -54,4 +55,13 @@ function Text(text, isVisible, styleNum, x, y) {
 	this.getStyle = function() {
 		return styles[this.styleNum];
 	}
+
+    this.reveal = function(clock, speed) {
+        
+        this.chars = this.textObj.text.split('');
+        this.textObj.text = ('');
+        //make sure text is visible if not already
+        this.textObj.visible = true;
+        clock.addTask(() => {this.textObj.text += this.chars.shift();}, speed, this.chars.length);
+    }
 };
