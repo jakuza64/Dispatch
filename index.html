@@ -67,7 +67,6 @@
         let titleText,
             titleIcon,
             testButton,
-            testButton2,
             state,
             clock,
             clockText,
@@ -99,10 +98,11 @@
 
             //initialize title text
             titleText = new Text('D I S P A T C H \n _____________', true, 0, 195, 60);
-            startScene.addChild(titleText.textObj);
+            app.stage.addChild(titleText.textObj);
 
             //initialize pause text
-            pauseText = new Text('P A U S E D \n _________', true, 0, 512, 256);
+            pauseText = new Text('P A U S E D \n _________', true, 0, app.screen.width /2, app.screen.height /2);
+            
             pauseScene.addChild(pauseText.textObj);
             
             dummyText = new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non urna non eros viverra dapibus suscipit convallis velit. Vestibulum luctus accumsan ullamcorper. Aenean molestie condimentum mauris sed ornare. Nullam dignissim.', true, 0, 150, 236);
@@ -115,13 +115,11 @@
             app.stage.addChild(titleIcon);
             
             //Create a couple buttons underneath
-            testButton = new Button('BUTTON', test, true, 195, 140);
-            startScene.addChild(testButton.button);
-            testButton2 = new Button('AND ANOTHA ONE', test2, true, 195, 180);
-            startScene.addChild(testButton2.button);
+            testButton = new Button('Bolongese', test, true, 195, 140);
+            app.stage.addChild(testButton.button);
             
             //Add start game button
-            startButton = new Button('Start Game', startGame, true, 195, 220);
+            startButton = new Button('Start Game', startGame, true, 195, 180);
             startScene.addChild(startButton.button);
             
 
@@ -163,14 +161,7 @@
             simpleBool = !simpleBool;
             if (simpleBool) titleText.setText('S P A G H E T T I \n _______________');
             else titleText.setText('D I S P A T C H \n _____________');
-            testButton.button.visible = false;
-            testButton2.button.visible = true;
-        }
-
-        function test2() {
-            alert('mEATballs');
-            testButton.button.visible = true;
-            testButton2.button.visible = false;
+            renderText(titleText,1);
         }
         
          function startGame() {
