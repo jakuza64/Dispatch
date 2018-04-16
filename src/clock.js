@@ -31,15 +31,17 @@ function Clock(speed) {
 	}
 
 	this.sendUpdates = function() {
-		console.log(this.tasks);
 		for (var i = 0; i < this.tasks.length; i++) {
-			//if (this.currentTime % this.tasks[i][1] == 0) {
+            console.log(Math.floor(Math.random() * 500) % this.tasks[i][1]);
+            //Modulate speed based on a random # 1-500 modulo the passed int
+            //1 is fastest, 2 would be about half as fast, and so on
+			if (Math.floor(Math.random() * 500) % this.tasks[i][1] == 0) {
 				this.tasks[i][2]--;
 				this.tasks[i][0]();
 				if (this.tasks[i][2] == 0) {
 					this.tasks.splice(i,1);
 				}
-			//}
+			}
 		}
 	}
 }

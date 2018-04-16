@@ -119,17 +119,21 @@
             startScene.addChild(testButton.button);
             testButton2 = new Button('AND ANOTHA ONE', test2, true, 195, 180);
             startScene.addChild(testButton2.button);
-            testButton3 = new Button('Start Game', test3, true, 195, 220);
-            startScene.addChild(testButton3.button);
+            
+            //Add start game button
+            startButton = new Button('Start Game', startGame, true, 195, 220);
+            startScene.addChild(startButton.button);
             
 
             //set the game state to play and initialize the game clock (and its text and pause button)
             state = loopPlay;
             clock = new Clock(20);
             clockText = new Text('', true, 1, app.screen.width - 120, app.screen.height - 40);
+            
             //Add clock to game
             app.stage.addChild(clockText.textObj);
             pauseButton = new Button('//', togglePause, true, app.screen.width - 160, app.screen.height - 40);
+            
             //Add pause button to game
             app.stage.addChild(pauseButton.button);
 
@@ -147,7 +151,7 @@
         function loopPlay(delta) {
             
             clock.iterate(delta);
-            clockText.setText(clock.humanizeCurrentTime());
+            clockText.setText(clock.humanizeCurrentTime());            
         };
 
         function loopPaused(delta) {
@@ -159,7 +163,6 @@
             simpleBool = !simpleBool;
             if (simpleBool) titleText.setText('S P A G H E T T I \n _______________');
             else titleText.setText('D I S P A T C H \n _____________');
-            titleText.reveal(clock,200);
             testButton.button.visible = false;
             testButton2.button.visible = true;
         }
@@ -170,10 +173,11 @@
             testButton2.button.visible = false;
         }
         
-         function test3() {
+         function startGame() {
            startScene.visible = 0;
            gameScene.visible = 1;
            gameOn = true;
+           renderText(dummyText, 1);
         }
 
         function togglePause() {
@@ -188,11 +192,15 @@
             //Unpause
             else if (state == loopPaused) {
                 state = loopPlay;
-                if(gameOn){ gameScene.visible = true; }
+                if(gameOn){ gameScene.visible = true;}
                 else{ startScene.visible = true; }                
                 pauseScene.visible = false;
                 pauseButton.setText('//', true);
             }
+        }
+        
+        function renderText(text, speed) {
+            text.reveal(clock, speed);
         }
     };
   </script>
